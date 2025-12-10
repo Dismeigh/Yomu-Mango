@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Manga Directory</h1>
+
+  {% if manga_list %}
+    <div class="manga-grid">
+      {% for m in manga_list %}
+        <a href="/manga/{{ m.id }}" class="manga-card">
+          {% if m.cover_image_url %}
+            <!-- Use ONLY your own licensed images here -->
+            <div class="manga-cover">
+              <img src="{{ m.cover_image_url }}" alt="{{ m.title }} cover">
+            </div>
+          {% else %}
+            <!-- Generated placeholder: gradient + first letter -->
+            <div class="manga-cover placeholder">
+              <span>{{ m.title[0] }}</span>
+            </div>
+          {% endif %}
+          <div class="manga-info">
+            <h2>{{ m.title }}</h2>
+            {% if m.alt_title %}
+              <p class="alt-title">{{ m.alt_title }}</p>
+            {% endif %}
+            <p class="status">{{ m.status|capitalize }} • {{ m.type|capitalize }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No manga found yet. Add some with the admin panel.</p>
+  {% endif %}
+{% endblock %}

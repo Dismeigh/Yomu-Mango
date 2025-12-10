@@ -1,0 +1,312 @@
+/* Layout */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #060716;
+  color: #f5f5ff;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header */
+.site-header {
+  background: #0b0c24;
+  border-bottom: 1px solid #23244a;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  font-weight: 700;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+/* Nav */
+.main-nav {
+  display: flex;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.main-nav a {
+  color: #c3c4ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.main-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Search aligns to the right on desktop */
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.search-form input {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #343657;
+  background: #11122b;
+  color: #f5f5ff;
+}
+
+.search-form button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  border: none;
+  background: #7c5cff;
+  color: white;
+  cursor: pointer;
+}
+
+/* Manga grid */
+.manga-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.manga-card {
+  background: #11122b;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.manga-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.manga-cover,
+.manga-cover-lg {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+/* If you have your own real cover images */
+.manga-cover img,
+.manga-cover-lg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* GENERATED placeholder cover (gradient + letter) */
+.manga-cover.placeholder,
+.manga-cover-lg.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top left, #8f5bff, #221b5b 40%, #050515);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* bigger for detail page */
+.manga-cover-lg.placeholder span {
+  font-size: 3rem;
+}
+
+.manga-info {
+  padding: 0.5rem 0.75rem 0.75rem;
+}
+
+.manga-info h2 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.alt-title {
+  font-size: 0.8rem;
+  color: #b0b2e0;
+}
+
+.status {
+  font-size: 0.75rem;
+  color: #8e90c9;
+}
+
+/* Detail page */
+.manga-detail-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.manga-cover-lg {
+  max-width: 260px;
+  flex: 0 0 260px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.manga-detail-info h1 {
+  margin-top: 0;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #aaaad9;
+}
+
+.description {
+  margin-top: 0.75rem;
+}
+
+/* Chapters table */
+.chapter-list {
+  margin-top: 2rem;
+}
+
+.chapter-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.chapter-list th,
+.chapter-list td {
+  border-bottom: 1px solid #23244a;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.chapter-list th {
+  font-size: 0.85rem;
+  color: #9a9cd5;
+}
+
+.chapter-list a {
+  color: #9e7bff;
+  text-decoration: none;
+}
+
+.chapter-list a:hover {
+  text-decoration: underline;
+}
+
+/* Admin styles */
+.admin-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #343657;
+  background: #11122b;
+  color: #f5f5ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #7c5cff;
+  border-color: #7c5cff;
+}
+
+.btn:hover {
+  filter: brightness(1.1);
+}
+
+.admin-section {
+  margin-top: 1.5rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+}
+
+.admin-table th,
+.admin-table td {
+  border-bottom: 1px solid #23244a;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+.admin-table th {
+  color: #a1a3df;
+}
+
+.admin-form {
+  max-width: 500px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #343657;
+  background: #11122b;
+  color: #f5f5ff;
+  font: inherit;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .header-inner {
+    flex-wrap: wrap;
+  }
+
+  .main-nav {
+    margin-left: 0;
+  }
+
+  .search-form {
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .manga-detail-header {
+    flex-direction: column;
+  }
+}

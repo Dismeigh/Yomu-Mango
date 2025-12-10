@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Manga Index{% endblock %}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">MangaIndex</a>
+
+      <nav class="main-nav">
+        <a href="/admin">Admin</a>
+      </nav>
+
+      <form action="/" method="get" class="search-form">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search manga..."
+          value="{{ q|default('') }}"
+        >
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

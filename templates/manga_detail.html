@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{ manga.title }} – Manga Index{% endblock %}
+
+{% block content %}
+  <article class="manga-detail">
+    <div class="manga-detail-header">
+      {% if manga.cover_image_url %}
+        <div class="manga-cover-lg">
+          <img src="{{ manga.cover_image_url }}" alt="{{ manga.title }} cover">
+        </div>
+      {% else %}
+        <div class="manga-cover-lg placeholder">
+          <span>{{ manga.title[0] }}</span>
+        </div>
+      {% endif %}
+
+      <div class="manga-detail-info">
+        <h1>{{ manga.title }}</h1>
+        {% if manga.alt_title %}
+          <p class="alt-title">{{ manga.alt_title }}</p>
+        {% endif %}
+        <p class="meta">
+          Status: {{ manga.status|capitalize }}<br>
+          Type: {{ manga.type|capitalize }}<br>
+          Rating: {{ manga.content_rating|capitalize }}
+        </p>
+        {% if manga.description %}
+          <p class="description">{{ manga.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <section class="chapter-list">
+      <h2>Chapters</h2>
+      {% if chapters %}
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Language</th>
+              <th>Source</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ch in chapters %}
+              <tr>
+                <td>{{ ch.number }}</td>
+                <td>{{ ch.title or 'Chapter ' ~ ch.number }}</td>
+                <td>{{ ch.language|upper }}</td>
+                <td>{{ ch.source_name or 'Unknown' }}</td>
+                <td>
+                  <a
+                    href="/api/chapters/{{ ch.id }}/read"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Read →
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No chapters found.</p>
+      {% endif %}
+    </section>
+  </article>
+{% endblock %}

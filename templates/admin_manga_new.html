@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Add Manga – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Add New Manga</h1>
+
+  <form class="admin-form" action="/admin/manga/new" method="post">
+    <label>
+      Title *
+      <input type="text" name="title" required>
+    </label>
+
+    <label>
+      Alt Title
+      <input type="text" name="alt_title">
+    </label>
+
+    <label>
+      Description
+      <textarea name="description" rows="4"></textarea>
+    </label>
+
+    <label>
+      Status
+      <select name="status">
+        <option value="ongoing" selected>Ongoing</option>
+        <option value="completed">Completed</option>
+        <option value="hiatus">Hiatus</option>
+      </select>
+    </label>
+
+    <label>
+      Type
+      <select name="type">
+        <option value="manga" selected>Manga</option>
+        <option value="manhwa">Manhwa</option>
+        <option value="manhua">Manhua</option>
+        <option value="webtoon">Webtoon</option>
+      </select>
+    </label>
+
+    <label>
+      Content Rating
+      <select name="content_rating">
+        <option value="safe" selected>Safe</option>
+        <option value="suggestive">Suggestive</option>
+        <option value="nsfw">NSFW</option>
+      </select>
+    </label>
+
+    <label>
+      Cover Image URL (optional, only use images you have rights to)
+      <input type="url" name="cover_image_url" placeholder="https://...">
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Save Manga</button>
+      <a href="/admin" class="btn">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Add Chapter – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Add New Chapter</h1>
+
+  {% if not manga_list or manga_list|length == 0 %}
+    <p>
+      There are no manga yet. You must
+      <a href="/admin/manga/new">add a manga first</a>
+      before adding chapters.
+    </p>
+  {% else %}
+    <form class="admin-form" action="/admin/chapters/new" method="post">
+      <label>
+        Manga *
+        <select name="manga_id" required>
+          <option value="" disabled selected>Select a manga</option>
+          {% for m in manga_list %}
+            <option value="{{ m.id }}">{{ m.title }} (ID: {{ m.id }})</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label>
+        Chapter Number * (e.g. 1, 1.5, 2)
+        <input type="number" name="number" step="0.1" required>
+      </label>
+
+      <label>
+        Chapter Title
+        <input type="text" name="title">
+      </label>
+
+      <label>
+        Language
+        <input type="text" name="language" value="en">
+      </label>
+
+      <label>
+        Volume
+        <input type="number" name="volume" min="0">
+      </label>
+
+      <label>
+        External Reader URL * (where this chapter is actually read)
+        <input type="url" name="external_url" placeholder="https://..." required>
+      </label>
+
+      <label>
+        Source Name (optional, e.g. site or group name)
+        <input type="text" name="source_name" placeholder="ExampleSource">
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn primary">Save Chapter</button>
+        <a href="/admin" class="btn">Cancel</a>
+      </div>
+    </form>
+  {% endif %}
+{% endblock %}
