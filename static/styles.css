@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #060716;
+  background: radial-gradient(circle at top, #141529 0%, #050515 55%, #02020a 100%);
   color: #f5f5ff;
 }
 
@@ -14,28 +14,31 @@ body {
 
 /* Header */
 .site-header {
-  background: #0b0c24;
-  border-bottom: 1px solid #23244a;
+  background: linear-gradient(to right, #10112b, #191a3f);
+  border-bottom: 1px solid #2b2d5a;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .logo {
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* Nav */
 .main-nav {
   display: flex;
   gap: 0.75rem;
-  margin-left: auto;
 }
 
 .main-nav a {
@@ -48,28 +51,57 @@ body {
   text-decoration: underline;
 }
 
-/* Search aligns to the right on desktop */
+/* Auth links */
+.auth-links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.auth-links a {
+  color: #ffcce8;
+  text-decoration: none;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+.welcome {
+  color: #e0e1ff;
+}
+
+/* Search */
 .search-form {
   display: flex;
   gap: 0.5rem;
-  margin-left: 1rem;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .search-form input {
   padding: 0.4rem 0.6rem;
-  border-radius: 4px;
+  border-radius: 999px;
   border: 1px solid #343657;
-  background: #11122b;
+  background: rgba(8, 8, 26, 0.9);
   color: #f5f5ff;
 }
 
 .search-form button {
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
   border: none;
-  background: #7c5cff;
+  background: linear-gradient(135deg, #ff7ac7, #b77bff);
   color: white;
   cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(255, 122, 199, 0.4);
+}
+
+.search-form button:hover {
+  filter: brightness(1.1);
 }
 
 /* Manga grid */
@@ -81,19 +113,22 @@ body {
 }
 
 .manga-card {
-  background: #11122b;
-  border-radius: 8px;
+  background: radial-gradient(circle at top, #181936, #11122b 40%, #07071a);
+  border-radius: 14px;
   text-decoration: none;
   color: inherit;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border 0.12s ease;
+  border: 1px solid rgba(132, 97, 255, 0.35);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
 }
 
 .manga-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 122, 199, 0.7);
 }
 
 .manga-cover,
@@ -117,7 +152,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top left, #8f5bff, #221b5b 40%, #050515);
+  background: radial-gradient(circle at top left, #ff7ac7, #8f5bff 40%, #221b5b 70%, #050515 100%);
   font-size: 2rem;
   font-weight: bold;
   color: #ffffff;
@@ -129,7 +164,7 @@ body {
 }
 
 .manga-info {
-  padding: 0.5rem 0.75rem 0.75rem;
+  padding: 0.6rem 0.75rem 0.85rem;
 }
 
 .manga-info h2 {
@@ -158,7 +193,7 @@ body {
 .manga-cover-lg {
   max-width: 260px;
   flex: 0 0 260px;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -173,6 +208,29 @@ body {
 
 .description {
   margin-top: 0.75rem;
+}
+
+.add-to-list {
+  margin-top: 1.25rem;
+}
+
+.inline-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.inline-form select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #343657;
+  background: #11122b;
+  color: #f5f5ff;
+}
+
+.small-note {
+  font-size: 0.8rem;
+  color: #a0a2d8;
 }
 
 /* Chapters table */
@@ -206,7 +264,7 @@ body {
   text-decoration: underline;
 }
 
-/* Admin styles */
+/* Admin / forms / tables */
 .admin-actions {
   display: flex;
   gap: 0.75rem;
@@ -217,7 +275,7 @@ body {
 .btn {
   display: inline-block;
   padding: 0.4rem 0.8rem;
-  border-radius: 4px;
+  border-radius: 999px;
   border: 1px solid #343657;
   background: #11122b;
   color: #f5f5ff;
@@ -226,13 +284,24 @@ body {
   cursor: pointer;
 }
 
+.btn.small {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+}
+
 .btn.primary {
-  background: #7c5cff;
-  border-color: #7c5cff;
+  background: linear-gradient(135deg, #ff7ac7, #b77bff);
+  border-color: transparent;
+  box-shadow: 0 0 10px rgba(255, 122, 199, 0.5);
+}
+
+.btn.danger {
+  background: #ff4d6a;
+  border-color: #ff4d6a;
 }
 
 .btn:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.08);
 }
 
 .admin-section {
@@ -243,6 +312,8 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin-top: 0.75rem;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .admin-table th,
@@ -250,12 +321,20 @@ body {
   border-bottom: 1px solid #23244a;
   padding: 0.4rem 0.5rem;
   font-size: 0.9rem;
+  background: rgba(8, 8, 26, 0.85);
 }
 
 .admin-table th {
   color: #a1a3df;
 }
 
+.list-actions {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* Forms */
 .admin-form {
   max-width: 500px;
   margin-top: 1rem;
@@ -275,11 +354,17 @@ body {
 .admin-form textarea,
 .admin-form select {
   padding: 0.4rem 0.6rem;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #343657;
-  background: #11122b;
+  background: rgba(12, 12, 34, 0.95);
   color: #f5f5ff;
   font: inherit;
+}
+
+.checkbox-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .form-actions {
@@ -288,20 +373,35 @@ body {
   margin-top: 0.5rem;
 }
 
+.error {
+  background: rgba(255, 80, 80, 0.15);
+  border: 1px solid #ff5050;
+  color: #ff9a9a;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  max-width: 500px;
+}
+
+/* Small note text */
+.small-note {
+  font-size: 0.8rem;
+  color: #9c9ed8;
+}
+
 /* Responsive tweaks */
 @media (max-width: 900px) {
   .header-inner {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .main-nav {
+  .auth-links {
     margin-left: 0;
   }
 
   .search-form {
     width: 100%;
     justify-content: flex-start;
-    margin-left: 0;
   }
 }
 

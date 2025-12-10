@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}New List – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Create New List</h1>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form class="admin-form" action="/lists/new" method="post">
+    <label>
+      List Name *
+      <input type="text" name="name" required>
+    </label>
+
+    <label>
+      Description
+      <textarea name="description" rows="3"></textarea>
+    </label>
+
+    <label class="checkbox-label">
+      <input type="checkbox" name="is_public" value="on">
+      Make this list public (anyone with the link can view)
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Create List</button>
+      <a href="/my/lists" class="btn">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

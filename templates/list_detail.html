@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ custom_list.name }} – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>{{ custom_list.name }}</h1>
+
+  {% if custom_list.description %}
+    <p>{{ custom_list.description }}</p>
+  {% endif %}
+
+  <p class="small-note">
+    Visibility: {{ 'Public' if custom_list.is_public else 'Private' }}
+  </p>
+
+  {% if custom_list.items %}
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Manga</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in custom_list.items %}
+          <tr>
+            <td>{{ item.manga.title }}</td>
+            <td>{{ item.manga.status|capitalize }}</td>
+            <td class="list-actions">
+              <a href="/manga/{{ item.manga.id }}" class="btn small">View</a>
+              {% if user and user.id == custom_list.user_id %}
+                <form action="/lists/remove" method="post" class="inline-form">
+                  <input type="hidden" name="item_id" value="{{ item.id }}">
+                  <button type="submit" class="btn danger small">Remove</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>This list is empty. Add some manga from the manga detail pages.</p>
+  {% endif %}
+{% endblock %}

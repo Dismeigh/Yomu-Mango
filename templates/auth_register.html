@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Create an Account</h1>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form class="admin-form" action="/auth/register" method="post">
+    <label>
+      Username
+      <input type="text" name="username" required>
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" required>
+    </label>
+
+    <label>
+      Password
+      <input type="password" name="password" required>
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Sign Up</button>
+      <a href="/auth/login" class="btn">Already have an account?</a>
+    </div>
+  </form>
+{% endblock %}

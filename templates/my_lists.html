@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}My Lists – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>My Lists</h1>
+
+  <section class="admin-actions">
+    <a class="btn primary" href="/lists/new">➕ Create New List</a>
+  </section>
+
+  {% if lists %}
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Visibility</th>
+          <th>Items</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for l in lists %}
+          <tr>
+            <td>{{ l.name }}</td>
+            <td>{{ l.description or '' }}</td>
+            <td>{{ 'Public' if l.is_public else 'Private' }}</td>
+            <td>{{ l.items|length }}</td>
+            <td><a href="/lists/{{ l.id }}">View</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You have no lists yet. <a href="/lists/new">Create your first list</a>.</p>
+  {% endif %}
+{% endblock %}

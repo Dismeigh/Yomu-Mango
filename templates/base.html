@@ -11,8 +11,24 @@
       <a href="/" class="logo">MangaIndex</a>
 
       <nav class="main-nav">
-        <a href="/admin">Admin</a>
+        <a href="/">Home</a>
+        {% if user %}
+          <a href="/my/lists">My Lists</a>
+          {% if user.role == 'admin' %}
+            <a href="/admin">Admin</a>
+          {% endif %}
+        {% endif %}
       </nav>
+
+      <div class="auth-links">
+        {% if user %}
+          <span class="welcome">Hi, {{ user.username }}</span>
+          <a href="/auth/logout">Logout</a>
+        {% else %}
+          <a href="/auth/login">Login</a>
+          <a href="/auth/register">Sign Up</a>
+        {% endif %}
+      </div>
 
       <form action="/" method="get" class="search-form">
         <input

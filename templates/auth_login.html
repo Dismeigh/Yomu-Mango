@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Login – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Login</h1>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form class="admin-form" action="/auth/login" method="post">
+    <label>
+      Username or Email
+      <input type="text" name="identifier" required>
+    </label>
+
+    <label>
+      Password
+      <input type="password" name="password" required>
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Log In</button>
+      <a href="/auth/register" class="btn">Create Account</a>
+    </div>
+  </form>
+{% endblock %}
