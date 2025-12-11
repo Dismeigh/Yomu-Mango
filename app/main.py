@@ -190,16 +190,12 @@ def register_submit(
             },
         )
 
-    # Make the very first user an admin; everyone after that is a normal user
-    admin_exists = db.query(User).filter(User.role == "admin").first()
-    role = "admin" if not admin_exists else "user"
-
     hashed = get_password_hash(password)
     user = User(
         username=username,
         email=email,
         password_hash=hashed,
-        role=role,
+        role="user",  # always normal user
     )
     db.add(user)
     db.commit()
@@ -435,6 +431,31 @@ def remove_from_list(
     return RedirectResponse(url=f"/lists/{list_id}", status_code=303)
 
 
+@app.post("/lists/{list_id}/delete", tags=["lists"])
+def delete_list(
+    list_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    if not current_user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    custom_list = (
+        db.query(CustomList)
+        .filter(CustomList.id == list_id, CustomList.user_id == current_user.id)
+        .first()
+    )
+
+    if not custom_list:
+        raise HTTPException(status_code=404, detail="List not found or not yours")
+
+    db.delete(custom_list)  # cascade deletes items too
+    db.commit()
+
+    return RedirectResponse(url="/my/lists", status_code=303)
+
+
 # -----------------------------
 # ADMIN PAGES (ADMIN ONLY)
 # -----------------------------
@@ -456,6 +477,53 @@ def admin_home(
             "user": current_user,
         },
     )
+
+
+@app.get("/admin/users", tags=["admin"])
+def admin_users(
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    require_admin(current_user)
+
+    users = db.query(User).order_by(User.created_at).all()
+    return templates.TemplateResponse(
+        "admin_users.html",
+        {
+            "request": request,
+            "user": current_user,
+            "users": users,
+        },
+    )
+
+
+@app.post("/admin/users/{user_id}/role", tags=["admin"])
+def admin_update_user_role(
+    user_id: int,
+    request: Request,
+    role: str = Form(...),  # "user" or "admin"
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    require_admin(current_user)
+
+    # Ensure only valid roles
+    if role not in ("user", "admin"):
+        raise HTTPException(status_code=400, detail="Invalid role")
+
+    target = db.query(User).filter(User.id == user_id).first()
+    if not target:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Optional safety: don't let an admin demote themselves
+    if target.id == current_user.id and role != "admin":
+        raise HTTPException(status_code=400, detail="You cannot demote yourself")
+
+    target.role = role
+    db.commit()
+
+    return RedirectResponse(url="/admin/users", status_code=303)
 
 
 @app.get("/admin/manga/new", tags=["admin"])

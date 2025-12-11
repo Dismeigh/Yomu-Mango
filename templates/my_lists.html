@@ -17,17 +17,25 @@
           <th>Description</th>
           <th>Visibility</th>
           <th>Items</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {% for l in lists %}
           <tr>
-            <td>{{ l.name }}</td>
+            <td><a href="/lists/{{ l.id }}">{{ l.name }}</a></td>
             <td>{{ l.description or '' }}</td>
             <td>{{ 'Public' if l.is_public else 'Private' }}</td>
             <td>{{ l.items|length }}</td>
-            <td><a href="/lists/{{ l.id }}">View</a></td>
+            <td class="list-actions">
+              <!-- View -->
+              <a href="/lists/{{ l.id }}" class="btn small">View</a>
+
+              <!-- Delete list -->
+              <form action="/lists/{{ l.id }}/delete" method="post" class="inline-form">
+                <button type="submit" class="btn small danger">Delete</button>
+              </form>
+            </td>
           </tr>
         {% endfor %}
       </tbody>

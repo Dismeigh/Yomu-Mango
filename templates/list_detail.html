@@ -5,6 +5,12 @@
 {% block content %}
   <h1>{{ custom_list.name }}</h1>
 
+  {% if user and user.id == custom_list.user_id %}
+    <form action="/lists/{{ custom_list.id }}/delete" method="post" style="margin-bottom:1rem;">
+      <button type="submit" class="btn danger">Delete This List</button>
+    </form>
+  {% endif %}
+
   {% if custom_list.description %}
     <p>{{ custom_list.description }}</p>
   {% endif %}
@@ -29,10 +35,11 @@
             <td>{{ item.manga.status|capitalize }}</td>
             <td class="list-actions">
               <a href="/manga/{{ item.manga.id }}" class="btn small">View</a>
+
               {% if user and user.id == custom_list.user_id %}
                 <form action="/lists/remove" method="post" class="inline-form">
                   <input type="hidden" name="item_id" value="{{ item.id }}">
-                  <button type="submit" class="btn danger small">Remove</button>
+                  <button type="submit" class="btn small danger">Remove</button>
                 </form>
               {% endif %}
             </td>
