@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile – Manga Index{% endblock %}
+
+{% block content %}
+  <section class="profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar-lg">
+        {% if profile_user.profile_image_url %}
+          <img src="{{ profile_user.profile_image_url }}" alt="{{ profile_user.username }} avatar">
+        {% else %}
+          <span>{{ profile_user.username[0]|upper }}</span>
+        {% endif %}
+      </div>
+      <div class="profile-header-text">
+        <h1>{{ profile_user.username }}</h1>
+        <p class="small-note">
+          Joined: {{ profile_user.created_at }} • Role: {{ profile_user.role|capitalize }}
+        </p>
+        <a href="/settings/profile" class="btn small primary">Edit Profile</a>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <h2>Bio</h2>
+      {% if profile_user.bio %}
+        <p>{{ profile_user.bio }}</p>
+      {% else %}
+        <p class="small-note">You haven’t written a bio yet. Click “Edit Profile” to add one (max 500 characters).</p>
+      {% endif %}
+
+      <h2>Anime List</h2>
+      {% if profile_user.profile_link %}
+        <p>
+          <a href="{{ profile_user.profile_link }}" target="_blank" rel="noopener">
+            View my AniList / MyAnimeList
+          </a>
+        </p>
+      {% else %}
+        <p class="small-note">
+          You can add a link to your AniList or MAL profile so others can see what you’re watching.
+        </p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

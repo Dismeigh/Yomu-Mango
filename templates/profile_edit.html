@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile – Manga Index{% endblock %}
+
+{% block content %}
+  <h1>Edit Profile</h1>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form class="admin-form" action="/settings/profile" method="post">
+    <label>
+      Profile Image URL
+      <span class="small-note">
+        Link to an image you own or have rights to (e.g. https://...).
+      </span>
+      <input
+        type="url"
+        name="profile_image_url"
+        value="{{ user.profile_image_url or '' }}"
+        placeholder="https://example.com/my-avatar.png"
+      >
+    </label>
+
+    <label>
+      Bio (max 500 characters)
+      <textarea
+        name="bio"
+        rows="4"
+        maxlength="500"
+        placeholder="Tell people about yourself, your favorite genres, etc."
+      >{{ user.bio or '' }}</textarea>
+      <span class="small-note">
+        Keep it short and sweet — 500 characters max.
+      </span>
+    </label>
+
+    <label>
+      AniList / MyAnimeList Profile Link
+      <span class="small-note">
+        Paste a link to your AniList or MAL profile so others can see your list.
+      </span>
+      <input
+        type="url"
+        name="profile_link"
+        value="{{ user.profile_link or '' }}"
+        placeholder="https://anilist.co/user/yourname or https://myanimelist.net/profile/yourname"
+      >
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Save Profile</button>
+      <a href="/me" class="btn">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

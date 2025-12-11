@@ -58,6 +58,11 @@ class User(Base):
     role = Column(String(20), default="user")  # user/admin
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    # NEW profile fields
+    profile_image_url = Column(String(512), nullable=True)  # user-chosen avatar URL
+    bio = Column(String(500), nullable=True)                # max 500 chars
+    profile_link = Column(String(512), nullable=True)       # AniList or MAL link
+
     lists = relationship("CustomList", back_populates="user", cascade="all, delete-orphan")
 
 

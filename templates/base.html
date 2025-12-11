@@ -22,7 +22,16 @@
 
       <div class="auth-links">
         {% if user %}
-          <span class="welcome">Hi, {{ user.username }}</span>
+          <a href="/me" class="profile-chip">
+            <div class="profile-avatar">
+              {% if user.profile_image_url %}
+                <img src="{{ user.profile_image_url }}" alt="{{ user.username }} avatar">
+              {% else %}
+                <span>{{ user.username[0]|upper }}</span>
+              {% endif %}
+            </div>
+            <span class="profile-name">{{ user.username }}</span>
+          </a>
           <a href="/auth/logout">Logout</a>
         {% else %}
           <a href="/auth/login">Login</a>

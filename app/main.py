@@ -262,6 +262,101 @@ def logout(
 
 
 # -----------------------------
+# PROFILE PAGES
+# -----------------------------
+
+@app.get("/me", tags=["profile"])
+def my_profile(
+    request: Request,
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    if not current_user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    return templates.TemplateResponse(
+        "profile_me.html",
+        {
+            "request": request,
+            "user": current_user,        # logged-in user (for header)
+            "profile_user": current_user # profile being viewed
+        },
+    )
+
+
+@app.get("/users/{username}", tags=["profile"])
+def view_user_profile(
+    username: str,
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    profile_user = db.query(User).filter(User.username == username).first()
+    if not profile_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return templates.TemplateResponse(
+        "profile_view.html",
+        {
+            "request": request,
+            "user": current_user,    # logged-in user (can be None)
+            "profile_user": profile_user,
+        },
+    )
+
+
+@app.get("/settings/profile", tags=["profile"])
+def edit_profile_form(
+    request: Request,
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    if not current_user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    return templates.TemplateResponse(
+        "profile_edit.html",
+        {
+            "request": request,
+            "user": current_user,
+            "error": None,
+        },
+    )
+
+
+@app.post("/settings/profile", tags=["profile"])
+def edit_profile_submit(
+    request: Request,
+    profile_image_url: Optional[str] = Form(None),
+    bio: Optional[str] = Form(None),
+    profile_link: Optional[str] = Form(None),
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    if not current_user:
+        return RedirectResponse(url="/auth/login", status_code=303)
+
+    # Enforce 500 char limit on bio
+    if bio and len(bio) > 500:
+        return templates.TemplateResponse(
+            "profile_edit.html",
+            {
+                "request": request,
+                "user": current_user,
+                "error": f"Bio must be 500 characters or less (you used {len(bio)}).",
+            },
+        )
+
+    # Normalize empty strings to None
+    current_user.profile_image_url = profile_image_url.strip() if profile_image_url else None
+    current_user.bio = bio.strip() if bio else None
+    current_user.profile_link = profile_link.strip() if profile_link else None
+
+    db.add(current_user)
+    db.commit()
+
+    return RedirectResponse(url="/me", status_code=303)
+
+
+# -----------------------------
 # CUSTOM LISTS
 # -----------------------------
 
